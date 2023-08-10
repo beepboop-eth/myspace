@@ -11,14 +11,16 @@ interface Props {
   params: { slug: string };
 }
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export async function generateStaticParams() {
-  const posts: Post[] = await fetch('http://localhost:3000/api/content').then((res) => res.json())
+  const posts: Post[] = await fetch(`${apiUrl}/api/content`).then((res) => res.json())
   
   return posts.map((post) => ({ params: { slug: post.slug } }))  
 }
 
 export default async function BlogPost({  params }: Props) {
-  const posts: Post[] = await fetch('http://localhost:3000/api/content').then((res) => res.json())
+  const posts: Post[] = await fetch(`${apiUrl}/api/content`).then((res) => res.json())
 
   const post = posts.find((post) => post.slug === params.slug)!;
   return (
