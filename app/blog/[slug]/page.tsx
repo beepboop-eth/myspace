@@ -12,18 +12,15 @@ interface Props {
 }
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-console.log("apiUrl", apiUrl)
 
 export async function generateStaticParams() {
-  // const posts: Post[] = await fetch(`${apiUrl}/api/content`).then((res) => res.json())
-  const posts: Post[] = []
+  const posts: Post[] = await fetch(`${apiUrl}/api/content`).then((res) => res.json())
   
   return posts.map((post) => ({ params: { slug: post.slug } }))  
 }
 
 export default async function BlogPost({  params }: Props) {
-  // const posts: Post[] = await fetch(`${apiUrl}/api/content`).then((res) => res.json())
-  const posts: Post[] = []
+  const posts: Post[] = await fetch(`${apiUrl}/api/content`).then((res) => res.json())
 
   const post = posts.find((post) => post.slug === params.slug)!;
   return (
